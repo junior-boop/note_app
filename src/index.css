@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+*{
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    @apply text-base
+}
+
+.indie {
+    font-family: 'Indie Flower', cursive;
+}
+
+
+.columns {
+    columns: 100px 2;
+}
+
+.gradient {
+    background-image: linear-gradient(0deg, rgb(248, 250, 252) 0%, rgba(248, 250, 252, 0) 100%)
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
