@@ -16,7 +16,7 @@ import { loader as editorLoader } from './pages/editor.jsx'
 
 function InstallIterface ({onClick}){
   return(
-    <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-[100dvh] bg-[#0005] flex items-center justify-center '>
+    <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-[100dvh] bg-[#0005] flex items-center justify-center disabled:opacity-30'>
       <div className=' w-[95%] md:w-[400px] aspect-square rounded-xl bg-white p-6 flex flex-col'>
         <div className='flex-1 flex flex-col items-center justify-center gap-6'>
           <div className='w-16 aspect-square flex items-center justify-center'>
@@ -39,6 +39,7 @@ function Home_page(){
 
 
   const [isLogin, setIsLogin] = useState(false)
+  const [installPrompt, setInstallPrompt] = useState({state : false, event : null}) 
 
   const { userInfo, updateUserInfo } = useAppStore()
   const { login, updatedLogin } = useLoginState()
@@ -110,38 +111,32 @@ function Home_page(){
   }
 
 
-  // This variable will save the event for later use.
 
   window.addEventListener('beforeinstallprompt', (e) => {
     // Prevents the default mini-infobar or install dialog from appearing on mobile
     e.preventDefault();
     // Save the event because you'll need to trigger it later.
     console.log('je fonctionne')
-    // Show your customized install prompt for your PWA
-    // Your own UI doesn't have to be a single element, you
-    // can have buttons in different locations, or wait to prompt
-    // as part of a critical journey.
-    // showInAppInstallPromotion();
-
-    // deferredPrompt.prompt();
-    //   // Find out whether the user confirmed the installation or not
-    // const { outcome } = await deferredPrompt.userChoice;
-    // // The deferredPrompt can only be used once.
-    // deferredPrompt = null;
-    // // Act on the user's choice
-    // if (outcome === 'accepted') {
-    //   console.log('User accepted the install prompt.');
-    // } else if (outcome === 'dismissed') {
-    //   console.log('User dismissed the install prompt');
-    // }
-
-    console.log(e)
+    setInstallPrompt({state : true, event : e})
   });
 
-  const handleInstallationClick = async () => {
-    let deferredPrompt;
+  const handleInstallationClick = async (e) => {
+    let deferredPrompt = installPrompt.event;
     
-    
+    deferredPrompt.prompt()
+    e.target.disabled = true
+
+
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("PWA setup accepted");
+        setInstallPrompt(e => ({ state : false, ...e }))
+      } else {
+        console.log("PWA setup rejected");
+      }
+      e.target.disabled = false
+      deferredPrompt = null;
+    })
   }
 
   if(isLogin){
@@ -160,7 +155,11 @@ function Home_page(){
         <div className='absolute bottom-6 w-full text-center'>
           #geniusofdigital
         </div>
-        <InstallIterface onClick={handleInstallationClick} />
+        {
+          installPrompt.state 
+          ? <InstallIterface onClick={handleInstallationClick} /> 
+          : null
+        }
       </div>
     )
   }
