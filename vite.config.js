@@ -50,12 +50,9 @@ export default defineConfig({
     react(),
     VitePWA(manifestForPlugIn)
   ],
-<<<<<<< HEAD
-=======
   build : {
     target: 'esnext'
   }
->>>>>>> 9bb58ba (build esnext)
 })
 
 
