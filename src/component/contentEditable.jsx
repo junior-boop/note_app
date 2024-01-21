@@ -47,7 +47,9 @@ function CheckFirstValue(element) {
         case '#':
             
             element.setAttribute('class', 'text-xl my-2 font-semibold')
-            element.innerText.substring(1)
+            if(element.innerText.length > 0){
+                console.log(element.innerText.replace('#', ''))
+            }
             window.addEventListener('keydown', key => {
                 if(key.key === 'Enter') {
                 element.setAttribute('class', 'text-base mb-3')
