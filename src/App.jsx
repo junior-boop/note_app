@@ -61,7 +61,7 @@ function NoteItems({text}){
         <div className='absolute bottom-0 h-[24px] w-full gradient'></div>
       </div>
       <div className='pt-2'>
-        <div className='px-2 py-1 rounded-md text-black font-bold text-xs bg-slate-300 w-max'>Matt 23:12-3</div>
+        <div className='px-2 py-1 rounded-sm text-black font-bold text-xs bg-slate-300 w-max'>Matt 23:12-3</div>
       </div>
     </div>
   )
