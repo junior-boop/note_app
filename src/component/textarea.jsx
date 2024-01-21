@@ -2,7 +2,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 export default function TextArea({onChange}){
 
     return(
-        <div className="text-xl font-medium px-6 py-2">
+        <div className="text-2xl font-semibold px-6 py-2">
             <TextareaAutosize 
                 style={{ width : "100%", outline : "none"}}
                 autoFocus = {false}
