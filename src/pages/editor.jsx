@@ -4,6 +4,7 @@ import TextArea from "../component/textarea";
 import { setData } from "../database";
 import { useEffect, useState } from "react";
 import { useAppDatabase } from "../databse-store";
+import ContentEditable from "../component/contentEditable";
 
 
 const createdAt = {
@@ -49,6 +50,7 @@ export default function Editor(){
             <PageHeader pinBtn={handlePin} />
             <div className="flex-1">
                 <TextArea onChange={handleChange} />
+                <ContentEditable />
             </div>
         </div>
     )
