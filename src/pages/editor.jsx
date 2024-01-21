@@ -1,11 +1,54 @@
 import { PageHeader } from "../component/header";
+import { useParams } from 'react-router-dom'
+import TextArea from "../component/textarea";
+import { setData } from "../database";
+import { useEffect, useState } from "react";
+import { useAppDatabase } from "../databse-store";
+
+
+const createdAt = {
+    date : new Date().toLocaleDateString(),
+    time : Date.now()
+}
+
+
+export async function loader({params}) {
+    return params.noteId
+}
 
 export default function Editor(){
-    return(
-        <div className="w-full h-[100vh] flex flex-col">
-            <PageHeader />
-            <div className="flex-1">
+    const [pin, setPin] = useState(false)
+    const [title, setTitle] = useState('')
+    const {id }=  useParams()
 
+    const { database, updatedDatabase } = useAppDatabase()
+
+    const handlePin = (boolean) => {
+        setPin(boolean)
+    }
+
+    const Value = {
+        id, 
+        pin : pin,
+        title : title,
+        createAt : createdAt, 
+        updatedAt : Date.now()
+    }
+
+    setData(id, Value)
+
+    const handleChange = ({target}) => {
+        setTitle(target.value)
+    }
+
+    useEffect(() => {
+        updatedDatabase([...database, id])
+    }, [])
+    return(
+        <div className="w-full h-[100dvh] flex flex-col">
+            <PageHeader pinBtn={handlePin} />
+            <div className="flex-1">
+                <TextArea onChange={handleChange} />
             </div>
         </div>
     )

@@ -2,30 +2,31 @@ import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Loading from './pages/loading.jsx'
 import { RiGoogleFill } from './component/icons.jsx'
 import { auth} from './firebase/index.js'
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import GlobalContextProvider, { useGlobalContext } from './globalContext/context.jsx'
 import Editor from './pages/editor.jsx'
-import { useAppStore } from './store.js'
+import { useAppStore, useLoginState } from './store.js'
+import { register } from "register-service-worker";
 
+import { loader as editorLoader } from './pages/editor.jsx'
 
 function Home_page(){
   const [isLogin, setIsLogin] = useState(false)
-  const [log, setLog] = useState(false)
 
   const { userInfo, updateUserInfo } = useAppStore()
+  const { login, updatedLogin } = useLoginState()
 
   useEffect(() => {
     const data = localStorage.getItem('note-app-user')
     if(data !== null){
       const convert = JSON.parse(data)
       updateUserInfo(convert)
-      setLog(true)
+      updatedLogin(true)
     } else {
-      setLog(false)
+      updatedLogin(false)
     }
 
   }, [])
@@ -33,7 +34,7 @@ function Home_page(){
   
 
   const handleSignIn = () => {
-    setLog(true)
+    updatedLogin(true)
     setIsLogin(true)
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -88,7 +89,7 @@ function Home_page(){
     return <Loading />
   }
   
-  if(!log){
+  if(!login){
     return(
       <div className='w-full h-[100vh] bg-white flex items-center justify-center'>
         <div>
@@ -104,23 +105,22 @@ function Home_page(){
     )
   }
 
-  if(log) return <App />
+  if(login) return <App />
   
 }
 
-const router = createBrowserRouter([
-  {
-    path : '/',
-    element : <Home_page />,
-  },
-  {
-    path : '/:noteId',
-    element : <Editor />,
-    // loader : commandIdLoader
-  },
-])
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,)
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element = {<Home_page />}/>
+        <Route 
+            path='/:id' 
+            element = {<Editor />}
+            loader={editorLoader}
+        />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>)
+
+register('./service-workers.js')

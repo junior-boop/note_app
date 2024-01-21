@@ -15,6 +15,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.2",
+    "react-textarea-autosize": "^8.5.3",
+    "register-service-worker": "^1.7.2",
+    "vite-plugin-pwa": "^0.17.4",
     "zustand": "^4.4.7"
   },
   "devDependencies": {

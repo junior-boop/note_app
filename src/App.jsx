@@ -5,11 +5,23 @@ import { RiSearchLine } from './component/icons'
 import SearchBar from './component/search_bar'
 import Titre from './component/titre'
 
+import { useAppDatabase } from './databse-store'
+import { allKeys, getData } from './database'
+
+
 
 function App() {
-
+  const [element, setElement] = useState([])
   const data = localStorage.getItem('note-app-user')
   const convert = JSON.parse(data)
+  const { database, updatedDatabase } = useAppDatabase()
+
+
+
+
+  useEffect(() => {
+    setElement(database)
+  }, [database])
 
   return (
     <div className='w-full h-[100vh] overflow-y-auto overflow-x-hidden relative'>
@@ -19,8 +31,14 @@ function App() {
         <SearchBar />
         <Titre titre={'autres Notres'} />
         <div className='min-h-[70vh] px-2'>
-          <Column  />  
-          <div className='h-[56px]'></div>        
+          {
+            element.length === 0
+            ? (<div></div>)
+            :( <>
+              <Column data = {element} />  
+              <div className='h-[56px]'></div> 
+            </> )
+          }    
         </div>
         <NewNote />
       </div>
@@ -32,8 +50,11 @@ export default App
 
 
 function NoteItems({text}){
+  const { database, updatedDatabase } = useAppDatabase()
+
+  // console.log(database)
   return(
-    <div className='w-full rounded-2xl bg-slate-50 p-4 max-h-[300px] flex flex-col'>
+    <div className='w-full rounded-xl bg-slate-50 p-4 max-h-[300px] flex flex-col'>
       <div className='font-bold text-base mb-3'>titre cviel cksnlkn</div>
       <div className='text-sm flex-1 overflow-hidden relative'>
         {text}
@@ -62,13 +83,13 @@ function Column({data}){
   })
 
   return(
-    <div className='flex gap-4'>
-      <div className='flex-1 flex flex-col gap-4'>
+    <div className='flex gap-2'>
+      <div className='flex-1 flex flex-col gap-2'>
         {
           data !== undefined && liste_1.map((el, key) => el !== undefined ? (<NoteItems text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae magna non lectus lacinia condimentum. Cras imperdiet blandit tortor, et rhoncus odio convallis et. Quisque nisi nunc, placerat ut diam at, euismod pulvinar risus. Nullam dolor nunc, molestie in ornare quis, mattis feugiat nibh. Sed pulvinar augue nunc, sit amet aliquam lacus rutrum sed. Nam felis dui, vulputate quis semper ut, rutrum fermentum urna. In consequat justo non venenatis tempor. '} key = {key} />) : null)
         }
       </div>
-      <div className='flex-1 flex flex-col gap-4'>
+      <div className='flex-1 flex flex-col gap-2'>
         {
           data !== undefined && liste_2.map((el, key) => el !== undefined ? (<NoteItems text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae magna non lectus lacinia condimentum. Cras imperdiet blandit tortor, et rhoncus odio convallis et. Quisque nisi nunc, placerat ut diam at, euismod pulvinar risus. Nullam dolor nunc, molestie in ornare quis, mattis feugiat nibh. Sed pulvinar augue nunc, sit amet aliquam lacus rutrum sed. Nam felis dui, vulputate quis semper ut, rutrum fermentum urna. In consequat justo non venenatis tempor. '} key = {key} />) : null)
         }

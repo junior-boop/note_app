@@ -2,7 +2,7 @@ import { useAppStore } from "../store";
 import { RiAddFill } from "./icons";
 import { useNavigate } from 'react-router-dom'
 
-import IdGenerator from '../globalContext/id_generator'
+// import IdGenerator from '../globalContext/id_generator'
 
 export default function NewNote(){
     const {userInfo} = useAppStore()

@@ -7,3 +7,11 @@ export const useAppStore = create((set) => ({
         set({userInfo : userInfo})
     }
 }))
+
+
+export const useLoginState = create(set => ({
+    login : false,
+    updatedLogin (value) {
+        set({ login : value})
+    }
+}))

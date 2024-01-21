@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiArrowLeftLine, RiDeleteBin6Line, RiPushpin2Fill, RiPushpin2Line, RiShareForwardBoxFill, RiUser6Fill } from "./icons";
 import { useNavigate } from 'react-router-dom'
 
@@ -20,16 +20,20 @@ export function HeaderApp ({image, user}){
 }
 
 
-export function PageHeader(){
+export function PageHeader({pinBtn}){
     const navigate = useNavigate()
     const  [pin, setPin] = useState(false)
 
     const handlePin = () => {
         setPin(!pin)
     }
+
+    useEffect(() => {
+        pinBtn(pin)
+    }, [pin])
     return(
         <div className="h-[62px] w-full px-4 flex items-center justify-between">
-            <button onClick={() => navigate(-1)} className="h-[42px] flex items-center">
+            <button onClick={() => navigate('/')} className="h-[42px] flex items-center">
                 <RiArrowLeftLine className = 'w-6 h-6' />
             </button>
             <div className="flex items-center gap-2">
