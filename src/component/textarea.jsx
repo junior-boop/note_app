@@ -4,7 +4,7 @@ export default function TextArea({onChange}){
     return(
         <div className="text-2xl font-semibold px-6 py-2">
             <TextareaAutosize 
-                style={{ width : "100%", outline : "none", lineHeight : 1}}
+                style={{ width : "100%", outline : "none", lineHeight : 1.1}}
                 autoFocus = {false}
                 placeholder='Votre titre'
                 onChange={onChange}
