@@ -34,7 +34,7 @@ export function PageHeader({pinBtn}){
     return(
         <div className="h-[62px] w-full px-4 flex items-center justify-between">
             <button onClick={() => navigate('/')} className="h-[42px] flex items-center">
-                <RiArrowLeftLine className = 'w-6 h-6' />
+                <RiArrowLeftLine className = 'w-7 h-7' />
             </button>
             <div className="flex items-center gap-2">
                 <button onClick={handlePin}  className={`h-[42px] w-[42px] flex items-center justify-center ${pin ? "rounded-full bg-blue-50" : ''}`}>

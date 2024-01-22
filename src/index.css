@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
 
 *{
     font-family: 'Atkinson Hyperlegible', sans-serif;
@@ -22,3 +23,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.un-slach {
+    @apply mb-2 text-xl font-semibold relative left-2
+}
+.un-slach::before {
+    content: '#';
+    font-family: Roboto;
+    font-weight: 900;
+    @apply mb-2 text-xl font-semibold relative left-[-8px] text-slate-300
+}
+
+p.un-slach::first-letter {
+    text-transform: uppercase;
+}

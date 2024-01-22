@@ -54,14 +54,14 @@ function NoteItems({text}){
 
   // console.log(database)
   return(
-    <div className='w-full rounded-xl bg-slate-50 p-4 max-h-[300px] flex flex-col' style={{ userSelect : 'none'}} >
+    <div className='w-full rounded-xl bg-slate-50 border p-4 max-h-[300px] flex flex-col' style={{ userSelect : 'none'}} >
       <div className='font-bold text-base mb-3' style={{lineHeight :1}}>titre cviel cksnlkn</div>
       <div className='text-sm flex-1 overflow-hidden relative' style={{lineHeight : 1.1}}>
         {text}
         <div className='absolute bottom-0 h-[24px] w-full gradient'></div>
       </div>
       <div className='pt-2'>
-        <div className='px-2 py-1 rounded-sm text-black font-bold text-xs bg-slate-300 w-max'>Matt 23:12-3</div>
+        <div className='px-2 py-1 rounded-sm text-black font-bold text-xs bg-slate-200 w-max'>Matt 23:12-3</div>
       </div>
     </div>
   )
