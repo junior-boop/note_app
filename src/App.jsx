@@ -7,6 +7,7 @@ import Titre from './component/titre'
 
 import { useAppDatabase } from './databse-store'
 import { allKeys, getData } from './database'
+import { NavLink } from 'react-router-dom/dist'
 
 
 
@@ -49,21 +50,49 @@ function App() {
 export default App
 
 
-function NoteItems({text}){
-  const { database, updatedDatabase } = useAppDatabase()
+function NoteItems({dataNote}){
+  const [note, setNote] = useState(null)
 
-  // console.log(database)
+  useEffect(() => {
+    return async () => {
+      const data = await getData(dataNote)
+      setNote(data)
+      console.log(data)
+    }
+  }, [dataNote])
   return(
-    <div className='w-full rounded-xl bg-slate-50 border p-4 max-h-[300px] flex flex-col' style={{ userSelect : 'none'}} >
-      <div className='font-bold text-base mb-3' style={{lineHeight :1}}>titre cviel cksnlkn</div>
+    <NavLink to={`/${dataNote}`}>
+      <div className='w-full rounded-xl bg-slate-50 border p-4 max-h-[300px] flex flex-col' style={{ userSelect : 'none'}} >
+      {
+        note !== null && (<>
+          {
+            note.title.length > 0 
+            ? <div className='font-bold text-base mb-3' style={{lineHeight :1}}>titre cviel cksnlkn</div>
+            : null
+          }
+        </>)
+      }
       <div className='text-sm flex-1 overflow-hidden relative' style={{lineHeight : 1.1}}>
-        {text}
+         {
+          note !== null && (
+            <>
+              {
+                note.donnee.hasOwnProperty('blocks') && (
+                  <>
+                    {note.donnee.blocks.map((el, key) => <div key = {key}>{el.data.text}</div>) }
+                  </>
+                )
+              }
+            </>
+          )
+         }
         <div className='absolute bottom-0 h-[24px] w-full gradient'></div>
       </div>
       <div className='pt-2'>
         <div className='px-2 py-1 rounded-sm text-black font-bold text-xs bg-slate-200 w-max'>Matt 23:12-3</div>
       </div>
     </div>
+    </NavLink>
   )
 }
 
@@ -86,12 +115,12 @@ function Column({data}){
     <div className='flex gap-2'>
       <div className='flex-1 flex flex-col gap-2'>
         {
-          data !== undefined && liste_1.map((el, key) => el !== undefined ? (<NoteItems text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae magna non lectus lacinia condimentum. Cras imperdiet blandit tortor, et rhoncus odio convallis et. Quisque nisi nunc, placerat ut diam at, euismod pulvinar risus. Nullam dolor nunc, molestie in ornare quis, mattis feugiat nibh. Sed pulvinar augue nunc, sit amet aliquam lacus rutrum sed. Nam felis dui, vulputate quis semper ut, rutrum fermentum urna. In consequat justo non venenatis tempor. '} key = {key} />) : null)
+          data !== undefined && liste_1.map((el, key) => el !== undefined ? (<NoteItems dataNote = {el} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae magna non lectus lacinia condimentum. Cras imperdiet blandit tortor, et rhoncus odio convallis et. Quisque nisi nunc, placerat ut diam at, euismod pulvinar risus. Nullam dolor nunc, molestie in ornare quis, mattis feugiat nibh. Sed pulvinar augue nunc, sit amet aliquam lacus rutrum sed. Nam felis dui, vulputate quis semper ut, rutrum fermentum urna. In consequat justo non venenatis tempor. '} key = {key} />) : null)
         }
       </div>
       <div className='flex-1 flex flex-col gap-2'>
         {
-          data !== undefined && liste_2.map((el, key) => el !== undefined ? (<NoteItems text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae magna non lectus lacinia condimentum. Cras imperdiet blandit tortor, et rhoncus odio convallis et. Quisque nisi nunc, placerat ut diam at, euismod pulvinar risus. Nullam dolor nunc, molestie in ornare quis, mattis feugiat nibh. Sed pulvinar augue nunc, sit amet aliquam lacus rutrum sed. Nam felis dui, vulputate quis semper ut, rutrum fermentum urna. In consequat justo non venenatis tempor. '} key = {key} />) : null)
+          data !== undefined && liste_2.map((el, key) => el !== undefined ? (<NoteItems dataNote = {el} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae magna non lectus lacinia condimentum. Cras imperdiet blandit tortor, et rhoncus odio convallis et. Quisque nisi nunc, placerat ut diam at, euismod pulvinar risus. Nullam dolor nunc, molestie in ornare quis, mattis feugiat nibh. Sed pulvinar augue nunc, sit amet aliquam lacus rutrum sed. Nam felis dui, vulputate quis semper ut, rutrum fermentum urna. In consequat justo non venenatis tempor. '} key = {key} />) : null)
         }
       </div>
     </div>

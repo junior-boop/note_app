@@ -21,7 +21,7 @@ export default function Editor(){
     const [pin, setPin] = useState(false)
     const [title, setTitle] = useState('')
     const {id }=  useParams()
-    const [dataNote, setData] = useState({})
+    const [dataNote, setDataNote] = useState({})
 
     const { database, updatedDatabase } = useAppDatabase()
 
@@ -49,6 +49,7 @@ export default function Editor(){
     }, [])
 
     useEffect(() => {
+        console.log(dataNote)
         setData(id, Value)
     }, [dataNote])
     return(
@@ -56,7 +57,7 @@ export default function Editor(){
             <PageHeader pinBtn={handlePin} />
             <div className="flex-1">
                 <TextArea onChange={handleChange} />
-                <ContentEditable onChangeValue={(data) => setData(data)}/>
+                <ContentEditable onChangeValue={(data) => setDataNote(data)}/>
             </div>
         </div>
     )
