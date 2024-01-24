@@ -24,16 +24,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.un-slach {
-    @apply mb-2 text-xl font-semibold relative left-2
-}
-.un-slach::before {
-    content: '#';
-    font-family: Roboto;
-    font-weight: 900;
-    @apply mb-2 text-xl font-semibold relative left-[-8px] text-slate-300
-}
 
-p.un-slach::first-letter {
-    text-transform: uppercase;
+h2 {
+    @apply text-xl font-semibold 
 }
