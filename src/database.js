@@ -15,7 +15,7 @@ export const setData = (idnote, value) => {
     return result
 }
 
-export const getData = (key) => localforage.getItem(key)
+export const getData = async (key) => await localforage.getItem(key)
 
 export const allKeys = await localforage.keys()
 

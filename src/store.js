@@ -15,3 +15,10 @@ export const useLoginState = create(set => ({
         set({ login : value})
     }
 }))
+
+export const useDataBase = create((set) => ({
+    database : null,
+    updateDatabase (data){
+        set({database : data})
+    }
+}))

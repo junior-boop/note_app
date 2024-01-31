@@ -124,3 +124,25 @@ export function BxsBible(props) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M6 22h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1H21V4a2 2 0 0 0-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3M8 7h3V5h2v2h3v2h-3v6h-2V9H8z"></path></svg>
   )
 }
+
+// more
+export function RiMore2Fill(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 3c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m0 14c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m0-7c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"></path></svg>
+  )
+}
+
+
+// save_icon
+export function RiSaveFill(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M18 21v-8H6v8H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h13l4 4v13a1 1 0 0 1-1 1zm-2 0H8v-6h8z"></path></svg>
+  )
+}
+
+
+export function RiSaveLine(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M7 19v-6h10v6h2V7.828L16.172 5H5v14zM4 3h13l4 4v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 12v4h6v-4z"></path></svg>
+  )
+}

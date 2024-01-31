@@ -1,5 +1,5 @@
 import TextareaAutosize from 'react-textarea-autosize'
-export default function TextArea({onChange}){
+export default function TextArea({onChange, value}){
 
     return(
         <div className="text-2xl font-semibold px-4 py-2">
@@ -8,6 +8,7 @@ export default function TextArea({onChange}){
                 autoFocus = {false}
                 placeholder='Votre titre'
                 onChange={onChange}
+                value={value}
             />
         </div>
     )

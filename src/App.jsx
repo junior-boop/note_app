@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { HeaderApp } from './component/header'
 import NewNote from './component/nouvelleNote'
-import { RiSearchLine } from './component/icons'
 import SearchBar from './component/search_bar'
 import Titre from './component/titre'
 
 import { useAppDatabase } from './databse-store'
 import { allKeys, getData } from './database'
 import { NavLink } from 'react-router-dom/dist'
+import { useGlobalContext } from './globalContext/context'
 
 
 
@@ -17,11 +17,16 @@ function App() {
   const convert = JSON.parse(data)
   const { database, updatedDatabase } = useAppDatabase()
 
+  const {DATABASE} = useGlobalContext()
+  const {DB} = DATABASE
 
-
+  useEffect(() => {
+    console.log(DB)
+  }, [])
 
   useEffect(() => {
     setElement(database)
+
   }, [database])
 
   return (
@@ -57,39 +62,54 @@ function NoteItems({dataNote}){
     return async () => {
       const data = await getData(dataNote)
       setNote(data)
-      console.log(data)
     }
   }, [dataNote])
+
+  const Blocks_reference = () => {
+    if(note!== null && note.donnee.hasOwnProperty('blocks')){
+      const t = note.donnee.blocks.filter((el) =>  el.type === "BibleVerse")
+      console.log(t)
+      if(t.length === 0){
+        return null
+      }
+      if( t.length > 3){
+        return t.slice(0, 2)
+      } else return t
+    } else return null
+  }
+
+
+  /**
+   * @returns {Array}
+   */
+  const block_text = () => {
+    console.log(note)
+    if(note !== null && note.donnee.hasOwnProperty('blocks')){
+      const t = note.donnee.blocks.filter((el) => el.type === 'paragraph')
+
+       return t
+    } else return []
+  }
+ 
+
   return(
     <NavLink to={`/${dataNote}`}>
-      <div className='w-full rounded-xl bg-slate-50 border p-4 max-h-[300px] flex flex-col' style={{ userSelect : 'none'}} >
+      <div className='w-full rounded-lg bg-slate-50 border p-4 max-h-[300px] flex flex-col' style={{ userSelect : 'none'}} >
       {
         note !== null && (<>
           {
             note.title.length > 0 
-            ? <div className='font-bold text-base mb-3' style={{lineHeight :1}}>titre cviel cksnlkn</div>
+            ? <div className='font-bold text-base mb-3' style={{lineHeight :1}}>{note.title}</div>
             : null
           }
         </>)
       }
-      <div className='text-sm flex-1 overflow-hidden relative' style={{lineHeight : 1.1}}>
-         {
-          note !== null && (
-            <>
-              {
-                note.donnee.hasOwnProperty('blocks') && (
-                  <>
-                    {note.donnee.blocks.map((el, key) => <div key = {key}>{el.data.text}</div>) }
-                  </>
-                )
-              }
-            </>
-          )
-         }
+      <div className='flex-1 overflow-hidden relative'>
+        {note!== null && block_text().map((el, key) =>  <div className='text-sm' key = {key} style={{lineHeight : 1.1}}>{el.data.text}</div>)}
         <div className='absolute bottom-0 h-[24px] w-full gradient'></div>
       </div>
       <div className='pt-2'>
-        <div className='px-2 py-1 rounded-sm text-black font-bold text-xs bg-slate-200 w-max'>Matt 23:12-3</div>
+        {Blocks_reference() !== null && Blocks_reference().map((el, key) => (<div className='px-2 py-1 rounded-sm text-slate-800 font-bold text-xs bg-slate-200 w-max' key={key}>el.data.reference</div>))}
       </div>
     </div>
     </NavLink>

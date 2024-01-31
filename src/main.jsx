@@ -10,6 +10,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Editor from './pages/editor.jsx'
 import { useAppStore, useLoginState } from './store.js'
 import { register } from "register-service-worker";
+import GlobalContextProvider from './globalContext/context.jsx'
 
 import { loader as editorLoader } from './pages/editor.jsx'
 
@@ -43,18 +44,6 @@ function Home_page(){
 
   const { userInfo, updateUserInfo } = useAppStore()
   const { login, updatedLogin } = useLoginState()
-
-  useEffect(() => {
-    const data = localStorage.getItem('note-app-user')
-    if(data !== null){
-      const convert = JSON.parse(data)
-      updateUserInfo(convert)
-      updatedLogin(true)
-    } else {
-      updatedLogin(false)
-    }
-
-  }, [])
 
   
 
@@ -170,6 +159,7 @@ function Home_page(){
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <GlobalContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path='/' element = {<Home_page />}/>
@@ -180,6 +170,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         />
       </Routes>
     </BrowserRouter>
+    </GlobalContextProvider>
   </React.StrictMode>)
 
 register('./service-workers.js')

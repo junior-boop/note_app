@@ -6,10 +6,25 @@ import BibleVerse from '../../bible/bible-verse.mjs'
 import InlineBibleRef from '../component/tools/inlineBibleref'
 // import { BxsBible, RiBold, RiHeading, RiItalic, RiListUnordered, RiUnderline } from "./icons"
 
+const data= {
+  blocks: [
+    {
+      type: 'BibleVerse',
+      data: {
+        reference : "Daniel 1: 12",
+        content : [
+              {
+                  "n": 12,
+                  "v": "Éprouve tes serviteurs pendant dix jours, et qu'on nous donne des légumes à manger et de l'eau à boire;"
+              }
+          ]
+      },
+    }
+  ],
+}
 
-export default function ContentEditable({data, onChangeValue}){
+export default function ContentEditable({datablock, onChangeValue}){
         const editable = useRef()
-        
 
         const initalization = () => {
           const editor = new EditorJS({
@@ -25,7 +40,6 @@ export default function ContentEditable({data, onChangeValue}){
               })
 
             },
-            data : {data},
             tools: {
                 BibleVerse : {
                   class : BibleVerse
@@ -40,21 +54,27 @@ export default function ContentEditable({data, onChangeValue}){
                 },
                 delimiter: Delimiter,
                 inlineCode: InlineBibleRef,
-            }
+            },
+
+            data : datablock
           });
         }
 
 
         useEffect(() => {
-          if(editable.current === null){
-            initalization()
+          if(datablock.hasOwnProperty('blocks')){
+            if(editable.current === null){
+              initalization()
+            }
+          } else {
+            console.log(false)
           }
           
           return () => {
             // editable.current.destroy()
             editable.current = null
           }
-        }, [])
+        }, [datablock])
     
     
     // .... other components
